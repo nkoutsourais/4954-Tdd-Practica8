@@ -25,14 +25,8 @@ public class Game {
 		if(error != null)
 			return error;
 		this.board.move(origin, target);
-		if (origin.diagonalDistance(target) == DISTANCE_EAT) {
-			Coordinate between = origin.betweenDiagonal(target);
-			this.board.remove(between);
-		}
-		if (this.board.getPiece(target).isLimit(target)){
-			this.board.remove(target);
-			this.board.put(target, new Draught(Color.WHITE));
-		}
+		checkEatAnyPiece(origin, target);
+		checkTransformPiece(target);
 		this.turn.change();
 		return null;
 	}
@@ -64,5 +58,25 @@ public class Game {
 
 	public boolean isEmpty(Coordinate coordinate) {
         return this.board.isEmpty(coordinate);
-    }
+	}
+	
+	void checkTransformPiece(Coordinate target) {
+		Piece piece = this.board.getPiece(target);
+		if (piece.isConvertible() && this.isLimit(piece, target)){
+			this.board.remove(target);
+			this.board.put(target, new Draught(piece.getColor()));
+		}
+	}
+	
+	boolean isLimit(Piece piece, Coordinate coordinate){
+		return coordinate.getRow() == 0 && piece.getColor() == Color.WHITE ||
+		coordinate.getRow()== getDimension()-1 && piece.getColor() == Color.BLACK;
+	}
+
+	void checkEatAnyPiece(Coordinate origin, Coordinate target) {
+		if (origin.diagonalDistance(target) == DISTANCE_EAT) {
+			Coordinate between = origin.betweenDiagonal(target);
+			this.board.remove(between);
+		}
+	}
 }

@@ -17,8 +17,5 @@ public abstract class Piece {
 		return color == Color.WHITE ? difference > 0 : difference < 0;
 	}
 
-	boolean isLimit(Coordinate coordinate){
-		return coordinate.getRow()== 0 && this.getColor() == Color.WHITE ||
-		coordinate.getRow()== 7 && this.getColor() == Color.BLACK;
-	}
+	abstract boolean isConvertible();
 }

@@ -79,6 +79,7 @@ public class GameWithDraughtsTest {
         when(board.getPiece(origin)).thenReturn(piece);
         when(board.remove(origin)).thenReturn(new Pawn(Color.BLACK));
         when(board.getPiece(target)).thenReturn(new Pawn(Color.BLACK));
+        when(board.getDimension()).thenReturn(8);
         game.move(origin, target);
         verify(board).remove(target);
         verify(board).put(any(Coordinate.class), any(Draught.class));
