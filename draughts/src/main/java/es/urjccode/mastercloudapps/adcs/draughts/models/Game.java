@@ -32,8 +32,7 @@ public class Game {
 	}
 
 	public Error move(Coordinate origin, Coordinate target) {
-		assert origin != null && target != null;
-		Error error = this.checker.check(origin, target);
+		Error error = simulateMove(origin, target);
 		if(error != null)
 			return error;
 		this.board.move(origin, target);
@@ -101,7 +100,8 @@ public class Game {
 		}
 	}
 
-	public void simulateMove(Coordinate origin, Coordinate target) {
-		throw new UnsupportedOperationException();
+	public Error simulateMove(Coordinate origin, Coordinate target) {
+		assert origin != null && target != null;
+		return this.checker.check(origin, target);
 	}
 }

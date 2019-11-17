@@ -107,7 +107,7 @@ public class GameTest {
     public void testGivenGameWhenSimulateMovementThenNoMovement() {
         Coordinate origin = new Coordinate(5, 0);
         Coordinate target = new Coordinate(4, 1);
-        this.game.simulateMove(origin, target);
+        assertNull(this.game.simulateMove(origin, target));
         assertNotNull(this.game.getColor(origin));
         assertNull(this.game.getColor(target));
     }
