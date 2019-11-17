@@ -59,7 +59,9 @@ public class PieceCheckerTest {
     public void givenPieceCheckerWhenDraughtCheckThenBadDistance() {
         BoardBuilder boardBuilder = new BoardBuilder()
                                         .addRowEmpty()
-                                        .addRow(" N");
+                                        .addRow(" N")
+                                        .addRowEmpty()
+                                        .addRow("   b");
         Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
         PieceChecker pieceChecker = new PieceChecker(game);
         assertNull(pieceChecker.check(new Coordinate(1, 1), new Coordinate(4, 4)));

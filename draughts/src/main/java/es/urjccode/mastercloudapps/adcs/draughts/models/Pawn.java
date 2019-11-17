@@ -7,7 +7,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean isConvertible() {
+    public boolean isConvertible() {
         return true;
     }
 }

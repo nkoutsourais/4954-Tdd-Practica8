@@ -9,5 +9,6 @@ public enum Error {
     NOT_EMPTY_TARGET, 
     NOT_ADVANCED, 
     EATING_EMPTY,
-    INCORRECT_COMMAND;
+    INCORRECT_COMMAND, 
+    EATING_MANY;
 }

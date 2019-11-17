@@ -17,5 +17,5 @@ public abstract class Piece {
 		return color == Color.WHITE ? difference > 0 : difference < 0;
 	}
 
-	abstract boolean isConvertible();
+	public abstract boolean isConvertible();
 }

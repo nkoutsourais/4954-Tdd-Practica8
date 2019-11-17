@@ -7,7 +7,7 @@ public class Draught extends Piece {
     }
 
     @Override
-    boolean isConvertible() {
+    public boolean isConvertible() {
         return false;
     }
 }
