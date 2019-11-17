@@ -11,11 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import es.urjccode.mastercloudapps.adcs.draughts.models.BoardBuilder;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Color;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Pawn;
+import es.urjccode.mastercloudapps.adcs.draughts.models.Turn;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PieceCheckerTest {
@@ -41,6 +43,26 @@ public class PieceCheckerTest {
             .thenReturn(new Pawn(Color.WHITE))
             .thenReturn(null);
         assertEquals(Error.EATING_EMPTY, checker.check(new Coordinate(5, 4), new Coordinate(3, 2)));
+    }
+
+    @Test
+    public void givenPieceCheckerWhenPawnCheckThenBadDistance() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow(" n");
+        Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertEquals(Error.BAD_DISTANCE, pieceChecker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
+    }
+
+    @Test
+    public void givenPieceCheckerWhenDraughtCheckThenBadDistance() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow(" N");
+        Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertNull(pieceChecker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
     }
 
     @Test

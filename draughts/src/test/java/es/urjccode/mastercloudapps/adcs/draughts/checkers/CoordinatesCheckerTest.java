@@ -27,11 +27,6 @@ public class CoordinatesCheckerTest {
     }
 
     @Test
-    public void givenCoordinatesCheckerWhenCheckThenBadDistance() {
-        assertEquals(Error.BAD_DISTANCE, checker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
-    }
-
-    @Test
     public void givenCoordinatesCheckerWhenCheckThenErrorNull() {
         assertNull(checker.check(new Coordinate(1, 1), new Coordinate(2, 2)));
     }

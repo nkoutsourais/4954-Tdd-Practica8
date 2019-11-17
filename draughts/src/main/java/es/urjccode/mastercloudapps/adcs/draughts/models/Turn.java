@@ -1,14 +1,14 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
-class Turn {
+public class Turn {
 
     private Color color;
 
-    Turn(){
+    public Turn(){
         this.color = Color.WHITE;
     }
 
-    Turn(Color color){
+    public Turn(Color color){
         this.color = color;
     }
 
@@ -28,5 +28,4 @@ class Turn {
 	public boolean isColor(Color color2) {
 		return false;
 	}
-
 }

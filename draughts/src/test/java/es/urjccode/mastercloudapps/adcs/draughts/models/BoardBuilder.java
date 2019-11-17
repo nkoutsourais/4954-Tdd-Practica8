@@ -3,28 +3,28 @@ package es.urjccode.mastercloudapps.adcs.draughts.models;
 import java.util.ArrayList;
 import java.util.List;
 
-class BoardBuilder {
+public class BoardBuilder {
 
     private List<String> rows;
     private Board board;
 
-    BoardBuilder() {
+    public BoardBuilder() {
         this.rows = new ArrayList<>();
         this.board = new Board();
     }
 
-    BoardBuilder addRow(String row) {
+    public BoardBuilder addRow(String row) {
         assert row != null;
         rows.add(row);
         return this;
     }
 
-    BoardBuilder addRowEmpty() {
+    public BoardBuilder addRowEmpty() {
         rows.add("        ");
         return this;
     }
 
-    Board getBoard() {
+    public Board getBoard() {
         for (int i = 0; i < this.rows.size(); i++) {
             for (int j = 0; j < this.rows.get(i).length(); j++) {
                 Coordinate coordinate = new Coordinate(i, j);
