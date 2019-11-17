@@ -17,9 +17,6 @@ class PieceChecker extends CheckerChain {
     @Override
     public Error check(Coordinate origin, Coordinate target) {
         Piece piece = this.game.getPiece(origin);
-		if (!piece.isAdvanced(origin, target)) {
-			return Error.NOT_ADVANCED;
-        }
         Error error;
         if (piece.isConvertible()) {
             error = CheckConvertible(origin, target) ;
@@ -30,6 +27,10 @@ class PieceChecker extends CheckerChain {
     }
 
     private Error CheckConvertible(Coordinate origin, Coordinate target) {
+        Piece piece = this.game.getPiece(origin);
+        if (!piece.isAdvanced(origin, target)) {
+			return Error.NOT_ADVANCED;
+        }
         if (origin.diagonalDistance(target) > game.getDistanceMinEat()) {
             return Error.BAD_DISTANCE;
         }

@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import es.urjccode.mastercloudapps.adcs.draughts.models.BoardBuilder;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Color;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
+import es.urjccode.mastercloudapps.adcs.draughts.models.Draught;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Pawn;
@@ -29,12 +30,27 @@ public class PieceCheckerTest {
     PieceChecker checker;
 
     @Test
-    public void givenPieceCheckerWhenPieceNotAdvanceThenErrorNotAdvanced() {
-        when(game.getPiece(any()))
-            .thenReturn(new Pawn(Color.BLACK))
-            .thenReturn(new Pawn(Color.WHITE));
-        assertEquals(Error.NOT_ADVANCED, checker.check(new Coordinate(5, 6), new Coordinate(4, 7)));
-        assertEquals(Error.NOT_ADVANCED, checker.check(new Coordinate(4, 7), new Coordinate(5, 6)));
+    public void givenPieceCheckerWhenPawnsNotAdvanceThenErrorNotAdvanced() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                            .addRowEmpty()
+                                            .addRow("bn");
+        Game game = new Game(boardBuilder.getBoard());
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertEquals(Error.NOT_ADVANCED, pieceChecker.check(new Coordinate(1, 0), new Coordinate(2, 1)));
+        assertEquals(Error.NOT_ADVANCED, pieceChecker.check(new Coordinate(1, 1), new Coordinate(0, 2)));
+    }
+
+    @Test
+    public void givenPieceCheckerWhenDraughtsGoBackThenOk() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                            .addRowEmpty()
+                                            .addRow(" b")
+                                            .addRow("B N")
+                                            .addRow(" n");
+        Game game = new Game(boardBuilder.getBoard());
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertNull(pieceChecker.check(new Coordinate(2, 0), new Coordinate(4, 2)));
+        assertNull(pieceChecker.check(new Coordinate(2, 2), new Coordinate(0, 0)));
     }
 
     @Test
