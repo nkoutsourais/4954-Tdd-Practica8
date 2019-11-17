@@ -1,6 +1,5 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Draught extends Piece {

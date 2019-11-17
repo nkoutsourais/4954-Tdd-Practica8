@@ -1,7 +1,9 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -152,5 +154,25 @@ public class GameTest {
         Coordinate origin = new Coordinate(5, 4);
         Coordinate target = new Coordinate(3, 2);
         assertEquals(Error.EATING_EMPTY, game.move(origin, target));
+    }
+
+    @Test
+    public void testGivenGameWhenNotIsBlockedThenIsBlockedFalse() {
+        Game game = new Game();
+        assertFalse(game.isBlocked());
+    }
+
+    @Test
+    public void testGivenGameWhenOneColorNoPiecesThenIsBlockedTrue() {
+        BoardBuilder boardBuilder = new BoardBuilder().addRow("n");
+        Game game = new Game(boardBuilder.getBoard());
+        assertTrue(game.isBlocked());
+    }
+
+    @Test
+    public void testGivenGameWhenOneColorImpossibleMoveThenIsBlockedTrue() {
+        BoardBuilder boardBuilder = new BoardBuilder().addRow("b");
+        Game game = new Game(boardBuilder.getBoard());
+        assertTrue(game.isBlocked());
     }
 }
