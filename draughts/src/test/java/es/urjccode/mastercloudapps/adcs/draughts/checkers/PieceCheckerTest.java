@@ -2,32 +2,17 @@ package es.urjccode.mastercloudapps.adcs.draughts.checkers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import es.urjccode.mastercloudapps.adcs.draughts.models.BoardBuilder;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Color;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
-import es.urjccode.mastercloudapps.adcs.draughts.models.Draught;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
-import es.urjccode.mastercloudapps.adcs.draughts.models.Pawn;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Turn;
 
-@RunWith(MockitoJUnitRunner.class)
 public class PieceCheckerTest {
-
-    @Mock
-    Game game;
-
-    @InjectMocks
-    PieceChecker checker;
 
     @Test
     public void givenPieceCheckerWhenPawnsNotAdvanceThenErrorNotAdvanced() {
@@ -55,11 +40,11 @@ public class PieceCheckerTest {
 
     @Test
     public void givenPieceCheckerWhenDiagonalEatEmptyThenErrorEatingEmpty() {
-        when(game.getDistanceMinEat()).thenReturn(2);
-        when(game.getPiece(any()))
-            .thenReturn(new Pawn(Color.WHITE))
-            .thenReturn(null);
-        assertEquals(Error.EATING_EMPTY, checker.check(new Coordinate(5, 4), new Coordinate(3, 2)));
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                            .addRow("n");
+        Game game = new Game(boardBuilder.getBoard());
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertEquals(Error.EATING_EMPTY, pieceChecker.check(new Coordinate(0, 0), new Coordinate(2, 2)));
     }
 
     @Test
@@ -98,8 +83,10 @@ public class PieceCheckerTest {
 
     @Test
     public void givenPieceCheckerWhenGameIsOkThenOk() {
-        when(game.getDistanceMinEat()).thenReturn(2);
-        when(game.getPiece(any())).thenReturn(new Pawn(Color.WHITE));
-        assertNull(checker.check(new Coordinate(5, 4), new Coordinate(4, 3)));
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRow("n");
+        Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertNull(pieceChecker.check(new Coordinate(0, 0), new Coordinate(1, 1)));
     }
 }
