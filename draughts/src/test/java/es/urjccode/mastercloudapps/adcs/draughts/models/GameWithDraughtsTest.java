@@ -1,87 +1,85 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import es.urjccode.mastercloudapps.adcs.draughts.checkers.CheckerChain;
 
 public class GameWithDraughtsTest {
 
-    @Mock
-    Turn turn;
-
-    @Mock
-    Piece piece;
-
-    @Mock
-    CheckerChain checker;
-
-    @Mock
-    Board board;
-
-    @InjectMocks
-    Game game;
-
-    @Before
-    public void before() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void testGivenGameWhenWhitePawnAtLimitThenNewDraugts() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow("b");
+        Game game = new Game(boardBuilder.getBoard());
         Coordinate origin = new Coordinate(1, 0);
         Coordinate target = new Coordinate(0, 1);
-        when(checker.check(origin, target)).thenReturn(null);
-        when(turn.getColor()).thenReturn(Color.WHITE);
-        when(board.isEmpty(origin)).thenReturn(false);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(board.getPiece(origin)).thenReturn(piece);
-        when(board.remove(origin)).thenReturn(new Pawn(Color.WHITE));
-        when(board.getPiece(target)).thenReturn(new Pawn(Color.WHITE));
+        Piece pieceOrigin = game.getPiece(origin);
+        assertNotNull(pieceOrigin);
+        assertTrue(pieceOrigin instanceof Pawn);
+        assertEquals(Color.WHITE, pieceOrigin.getColor());
         game.move(origin, target);
-        verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
+        assertNull(game.getPiece(origin));
+        Piece pieceTarget = game.getPiece(target);
+        assertNotNull(pieceTarget);
+        assertTrue(pieceTarget instanceof Draught);
+        assertEquals(Color.WHITE, pieceTarget.getColor());
     }
 
     @Test
     public void testGivenGameWhenPawnAtLimitAndEatingThenNewDraugts() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow("  n")
+                                        .addRow(" b");
+        Game game = new Game(boardBuilder.getBoard());
         Coordinate origin = new Coordinate(2, 1);
         Coordinate target = new Coordinate(0, 3);
-        when(checker.check(origin, target)).thenReturn(null);
-        when(turn.getColor()).thenReturn(Color.WHITE);
-        when(board.isEmpty(origin)).thenReturn(false);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(board.getPiece(origin)).thenReturn(piece);
-        when(board.remove(origin)).thenReturn(new Pawn(Color.WHITE));
-        when(board.getPiece(target)).thenReturn(new Pawn(Color.WHITE));
+        Coordinate coordinateEat = new Coordinate(1, 2);
+        Piece pieceOrigin = game.getPiece(origin);
+        assertNotNull(pieceOrigin);
+        assertTrue(pieceOrigin instanceof Pawn);
+        assertEquals(Color.WHITE, pieceOrigin.getColor());
+        Piece pieceEat = game.getPiece(coordinateEat);
+        assertNotNull(pieceEat);
+        assertTrue(pieceEat instanceof Pawn);
+        assertEquals(Color.BLACK, pieceEat.getColor());
         game.move(origin, target);
-        verify(board).remove(origin.betweenDiagonal(target));
-        verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
+        assertNull(game.getPiece(origin));
+        assertNull(game.getPiece(coordinateEat));
+        Piece pieceTarget = game.getPiece(target);
+        assertNotNull(pieceTarget);
+        assertTrue(pieceTarget instanceof Draught);
+        assertEquals(Color.WHITE, pieceTarget.getColor());
     }
 
     @Test
     public void testGivenGameWhenBlackPawnAtLimitThenNewDraugts() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRow("   n")
+                                        .addRowEmpty();
+        Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
         Coordinate origin = new Coordinate(6, 3);
         Coordinate target = new Coordinate(7, 2);
-        when(checker.check(origin, target)).thenReturn(null);
-        when(turn.getColor()).thenReturn(Color.BLACK);
-        when(board.isEmpty(origin)).thenReturn(false);
-        when(board.getColor(origin)).thenReturn(Color.BLACK);
-        when(board.getPiece(origin)).thenReturn(piece);
-        when(board.remove(origin)).thenReturn(new Pawn(Color.BLACK));
-        when(board.getPiece(target)).thenReturn(new Pawn(Color.BLACK));
-        when(board.getDimension()).thenReturn(8);
+        Piece pieceOrigin = game.getPiece(origin);
+        assertNotNull(pieceOrigin);
+        assertTrue(pieceOrigin instanceof Pawn);
+        assertEquals(Color.BLACK, pieceOrigin.getColor());
         game.move(origin, target);
-        verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
+        assertNull(game.getPiece(origin));
+        Piece pieceTarget = game.getPiece(target);
+        assertNotNull(pieceTarget);
+        assertTrue(pieceTarget instanceof Draught);
+        assertEquals(Color.BLACK, pieceTarget.getColor());
     }
 }

@@ -19,6 +19,18 @@ public class Game {
 		this.checker = GameValidator.getChecker(this);
 	}
 
+	public Game(Board board) {
+		this.turn = new Turn();
+		this.board = board;
+		this.checker = GameValidator.getChecker(this);
+	}
+
+	public Game(Board board, Turn turn) {
+		this.board = board;
+		this.turn = turn;
+		this.checker = GameValidator.getChecker(this);
+	}
+
 	public Error move(Coordinate origin, Coordinate target) {
 		assert origin != null && target != null;
 		Error error = this.checker.check(origin, target);

@@ -8,6 +8,10 @@ class Turn {
         this.color = Color.WHITE;
     }
 
+    Turn(Color color){
+        this.color = color;
+    }
+
     void change(){
         this.color = Color.values()[(this.color.ordinal()+1)%2];
     }
