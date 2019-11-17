@@ -87,8 +87,8 @@ public class Game {
 
 	void checkEatAnyPiece(Coordinate origin, Coordinate target) {
 		if (origin.diagonalDistance(target) == DISTANCE_EAT) {
-			Coordinate between = origin.betweenDiagonal(target);
-			this.board.remove(between);
+			Coordinate[] between = origin.betweenDiagonal(target);
+			this.board.remove(between[0]);
 		}
 	}
 }

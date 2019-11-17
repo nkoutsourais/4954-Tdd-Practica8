@@ -30,18 +30,23 @@ public class Coordinate {
         return Math.abs(this.row - coordinate.row);
     }
 
-    public Coordinate betweenDiagonal(Coordinate coordinate) {
+    public Coordinate[] betweenDiagonal(Coordinate coordinate) {
         assert coordinate != null && coordinate.isValid();
-        assert this.isValid() && this.diagonalDistance(coordinate) == 2;
-        int rowShift = 1;
-        if (coordinate.row - this.row < 0) {
-            rowShift = -1;
+        assert this.isValid() && this.diagonalDistance(coordinate) >= 2;
+        Coordinate[] coordinates = new Coordinate[this.diagonalDistance(coordinate)-1];
+        for (int i = 1; i < this.diagonalDistance(coordinate); i++)
+        {
+            int rowShift = i;
+            if (coordinate.row - this.row < 0) {
+                rowShift = i * -1;
+            }
+            int columnShift = i;
+            if (coordinate.column - this.column < 0) {
+                columnShift = i * -1;
+            }
+            coordinates[i-1] = new Coordinate(this.row + rowShift, this.column + columnShift);
         }
-        int columnShift = 1;
-        if (coordinate.column - this.column < 0) {
-            columnShift = -1;
-        }
-        return new Coordinate(this.row + rowShift, this.column + columnShift);
+        return coordinates;
     }
 
     public boolean isBlack() {

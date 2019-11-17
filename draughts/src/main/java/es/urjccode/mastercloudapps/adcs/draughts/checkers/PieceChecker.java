@@ -22,8 +22,8 @@ class PieceChecker extends CheckerChain {
 			return Error.NOT_ADVANCED;
         }
         if (origin.diagonalDistance(target) == DISTANCE_DIAGONAL_FOR_EAT) {
-			Coordinate between = origin.betweenDiagonal(target);
-			if (this.game.getPiece(between) == null) {
+			Coordinate[] between = origin.betweenDiagonal(target);
+			if (this.game.getPiece(between[0]) == null) {
 				return Error.EATING_EMPTY;
 			}
         }
