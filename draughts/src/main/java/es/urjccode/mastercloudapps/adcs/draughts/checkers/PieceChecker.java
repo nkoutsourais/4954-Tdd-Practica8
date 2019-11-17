@@ -8,8 +8,6 @@ import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
 
 class PieceChecker extends CheckerChain {
 
-    private static final int DISTANCE_DIAGONAL_FOR_EAT = 2;
-
     Game game;
 
     PieceChecker(Game game) {
@@ -32,10 +30,10 @@ class PieceChecker extends CheckerChain {
     }
 
     private Error CheckConvertible(Coordinate origin, Coordinate target) {
-        if (origin.diagonalDistance(target) > DISTANCE_DIAGONAL_FOR_EAT) {
+        if (origin.diagonalDistance(target) > game.getDistanceMinEat()) {
             return Error.BAD_DISTANCE;
         }
-        if (origin.diagonalDistance(target) == DISTANCE_DIAGONAL_FOR_EAT) {
+        if (origin.diagonalDistance(target) == game.getDistanceMinEat()) {
 			Coordinate[] between = origin.betweenDiagonal(target);
             if (CountPieces(between, game.getColor(origin)) == 0) {
 				return Error.EATING_EMPTY;
@@ -45,6 +43,9 @@ class PieceChecker extends CheckerChain {
     }
 
     private Error CheckNoConvertible(Coordinate origin, Coordinate target) {
+        if (origin.diagonalDistance(target) < game.getDistanceMinEat()) {
+            return Error.BAD_DISTANCE;
+        }
         Coordinate[] between = origin.betweenDiagonal(target);
         int pieces = CountPieces(between, game.getColor(origin));
         if (pieces == 0)

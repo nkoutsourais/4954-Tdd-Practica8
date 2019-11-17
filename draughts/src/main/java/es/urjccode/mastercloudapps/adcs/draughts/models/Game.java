@@ -68,6 +68,10 @@ public class Game {
 		return this.board.getDimension();
 	}
 
+	public int getDistanceMinEat() {
+		return DISTANCE_EAT;
+	}
+
 	public boolean isEmpty(Coordinate coordinate) {
         return this.board.isEmpty(coordinate);
 	}
@@ -86,9 +90,14 @@ public class Game {
 	}
 
 	void checkEatAnyPiece(Coordinate origin, Coordinate target) {
-		if (origin.diagonalDistance(target) == DISTANCE_EAT) {
+		if (origin.diagonalDistance(target) >= getDistanceMinEat()) {
 			Coordinate[] between = origin.betweenDiagonal(target);
-			this.board.remove(between[0]);
+			for (Coordinate coordinate : between) {
+				Piece piece = this.getPiece(coordinate);
+				if (piece != null && piece.getColor() != this.getColor(origin)) {
+					this.board.remove(coordinate);
+				}
+			}
 		}
 	}
 }

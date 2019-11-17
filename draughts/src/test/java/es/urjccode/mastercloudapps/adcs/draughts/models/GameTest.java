@@ -126,7 +126,7 @@ public class GameTest {
                                         .addRow("     n")
                                         .addRowEmpty()
                                         .addRowEmpty()
-                                        .addRow("  b");
+                                        .addRow("  B");
         Game game = new Game(boardBuilder.getBoard());
         Coordinate origin = new Coordinate(5, 2);
         Coordinate target = new Coordinate(1, 6);

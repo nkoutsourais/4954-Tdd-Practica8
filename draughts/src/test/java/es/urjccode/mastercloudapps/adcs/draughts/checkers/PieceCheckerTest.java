@@ -39,6 +39,7 @@ public class PieceCheckerTest {
 
     @Test
     public void givenPieceCheckerWhenDiagonalEatEmptyThenErrorEatingEmpty() {
+        when(game.getDistanceMinEat()).thenReturn(2);
         when(game.getPiece(any()))
             .thenReturn(new Pawn(Color.WHITE))
             .thenReturn(null);
@@ -81,6 +82,7 @@ public class PieceCheckerTest {
 
     @Test
     public void givenPieceCheckerWhenGameIsOkThenOk() {
+        when(game.getDistanceMinEat()).thenReturn(2);
         when(game.getPiece(any())).thenReturn(new Pawn(Color.WHITE));
         assertNull(checker.check(new Coordinate(5, 4), new Coordinate(4, 3)));
     }
