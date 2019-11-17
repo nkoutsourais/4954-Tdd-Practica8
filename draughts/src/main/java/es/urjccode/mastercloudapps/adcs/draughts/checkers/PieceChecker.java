@@ -31,10 +31,10 @@ class PieceChecker extends CheckerChain {
         if (!piece.isAdvanced(origin, target)) {
 			return Error.NOT_ADVANCED;
         }
-        if (origin.diagonalDistance(target) > game.getDistanceMinEat()) {
+        if (origin.diagonalDistance(target) > Piece.getDistanceEat()) {
             return Error.BAD_DISTANCE;
         }
-        if (origin.diagonalDistance(target) == game.getDistanceMinEat()) {
+        if (origin.diagonalDistance(target) == Piece.getDistanceEat()) {
 			Coordinate[] between = origin.betweenDiagonal(target);
             if (CountPieces(between, game.getColor(origin)) == 0) {
 				return Error.EATING_EMPTY;
@@ -44,7 +44,7 @@ class PieceChecker extends CheckerChain {
     }
 
     private Error CheckNoConvertible(Coordinate origin, Coordinate target) {
-        if (origin.diagonalDistance(target) < game.getDistanceMinEat()) {
+        if (origin.diagonalDistance(target) < Piece.getDistanceEat()) {
             return Error.BAD_DISTANCE;
         }
         Coordinate[] between = origin.betweenDiagonal(target);

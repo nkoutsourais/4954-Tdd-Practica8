@@ -4,6 +4,8 @@ import java.util.List;
 
 public abstract class Piece {
 
+	private static final int DISTANCE_EAT = 2;
+	
 	private Color color;
 
 	public Piece(Color color){
@@ -17,6 +19,10 @@ public abstract class Piece {
 	public boolean isAdvanced(Coordinate origin, Coordinate target) {
 		int difference = origin.getRow() - target.getRow();
 		return color == Color.WHITE ? difference > 0 : difference < 0;
+	}
+
+	public static int getDistanceEat() {
+		return DISTANCE_EAT;
 	}
 
 	public abstract boolean isConvertible();

@@ -175,4 +175,14 @@ public class GameTest {
         Game game = new Game(boardBuilder.getBoard());
         assertTrue(game.isBlocked());
     }
+
+    @Test
+    public void testGivenGameWhenOneColorWithPossibleMoveThenIsBlockedFalse() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow(" n")
+                                        .addRow("b ");
+        Game game = new Game(boardBuilder.getBoard());
+        assertFalse(game.isBlocked());
+    }
 }

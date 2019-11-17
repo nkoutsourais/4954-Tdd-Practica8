@@ -1,7 +1,6 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 class Board {
 
@@ -18,12 +17,12 @@ class Board {
         }
     }
 
-    private Square getSquare(Coordinate coordinate){
-        assert coordinate!=null && coordinate.isValid();
+    private Square getSquare(Coordinate coordinate) {
+        assert coordinate != null && coordinate.isValid();
         return this.squares[coordinate.getRow()][coordinate.getColumn()];
     }
 
-    void put(Coordinate coordinate, Piece piece){
+    void put(Coordinate coordinate, Piece piece) {
         assert piece != null;
         this.getSquare(coordinate).put(piece);
     }
@@ -44,17 +43,18 @@ class Board {
     boolean isEmpty(Coordinate coordinate) {
         return this.getSquare(coordinate).isEmpty();
     }
-    
+
     Color getColor(Coordinate coordinate) {
         return this.getSquare(coordinate).getColor();
     }
 
-    List<Piece> getPieces(Color color) {
-        List<Piece> pieces = new ArrayList<Piece>();
+    HashMap<Coordinate, Piece> getPieces(Color color) {
+        HashMap<Coordinate, Piece> pieces = new HashMap<Coordinate, Piece>();
         for (int i = 0; i < this.getDimension(); i++) {
             for (int j = 0; j < this.getDimension(); j++) {
-                if(this.getColor(new Coordinate(i, j)) == color)
-                    pieces.add(this.squares[i][j].getPiece());
+                Coordinate coordinate = new Coordinate(i, j);
+                if(this.getColor(coordinate) == color)
+                    pieces.put(coordinate, this.squares[i][j].getPiece());
             }
         }
 		return pieces;

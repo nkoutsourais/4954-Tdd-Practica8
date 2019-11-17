@@ -25,9 +25,9 @@ public class PieceTest {
     @Test
     public void testGivenPawnWhenGetPossibleMovementsThenArrayCoordinates(){
         Piece pawn = new Pawn(Color.BLACK);
-        Coordinate[] possibleMovements = new Coordinate[] { new Coordinate(1, 0), new Coordinate(1, 2) };
+        Coordinate[] possibleMovements = new Coordinate[] { new Coordinate(1, 0), new Coordinate(1, 2), new Coordinate(2, 3) };
         assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 1)).toArray());
-        possibleMovements = new Coordinate[] { new Coordinate(1, 1) };
+        possibleMovements = new Coordinate[] { new Coordinate(1, 1), new Coordinate(2, 2) };
         assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 0)).toArray());
         pawn = new Pawn(Color.WHITE);
         possibleMovements = new Coordinate[] { new Coordinate(0, 0), new Coordinate(0, 2) };

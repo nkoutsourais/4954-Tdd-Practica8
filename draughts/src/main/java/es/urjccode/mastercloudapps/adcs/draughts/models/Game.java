@@ -1,11 +1,12 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
+import java.util.HashMap;
+import java.util.List;
+
 import es.urjccode.mastercloudapps.adcs.draughts.checkers.CheckerChain;
 import es.urjccode.mastercloudapps.adcs.draughts.checkers.GameValidator;
 
 public class Game {
-
-	private static final int DISTANCE_EAT = 2;
 
 	private Board board;
 
@@ -60,15 +61,22 @@ public class Game {
 	}
 
 	public boolean isBlocked() {
-		return this.board.getPieces(this.turn.getColor()).isEmpty();
+		HashMap<Coordinate, Piece> pieces = this.board.getPieces(this.turn.getColor());
+		if(pieces.isEmpty())
+			return true;
+		for (Coordinate originPiece : pieces.keySet()) {
+			List<Coordinate> targetList = pieces.get(originPiece).getPossibleMoves(originPiece);
+			for (Coordinate possibleTarget : targetList) {
+				if(this.simulateMove(originPiece, possibleTarget) == null) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public int getDimension() {
 		return this.board.getDimension();
-	}
-
-	public int getDistanceMinEat() {
-		return DISTANCE_EAT;
 	}
 
 	public boolean isEmpty(Coordinate coordinate) {
@@ -89,7 +97,7 @@ public class Game {
 	}
 
 	void checkEatAnyPiece(Coordinate origin, Coordinate target) {
-		if (origin.diagonalDistance(target) >= getDistanceMinEat()) {
+		if (origin.diagonalDistance(target) >= Piece.getDistanceEat()) {
 			Coordinate[] between = origin.betweenDiagonal(target);
 			for (Coordinate coordinate : between) {
 				Piece piece = this.getPiece(coordinate);

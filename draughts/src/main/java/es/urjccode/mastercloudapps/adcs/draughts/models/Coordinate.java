@@ -52,15 +52,6 @@ public class Coordinate {
         return coordinates;
     }
 
-    public List<Coordinate> getPossibleMoves() {
-        List<Coordinate> coordinates = new ArrayList<>();
-        coordinates.add(new Coordinate(this.getRow() + 1, this.getColumn() - 1));
-        coordinates.add(new Coordinate(this.getRow() + 1, this.getColumn() + 1));
-        coordinates.add(new Coordinate(this.getRow() - 1, this.getColumn() - 1));
-        coordinates.add(new Coordinate(this.getRow() - 1, this.getColumn() + 1));
-        return coordinates;
-    }
-
     public List<Coordinate> getMaximumDiagonalPossible() {
         List<Coordinate> coordinates = new ArrayList<>();
         Coordinate coordinateUpBack = new Coordinate(this.getRow(), this.getColumn());
