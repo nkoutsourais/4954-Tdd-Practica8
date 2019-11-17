@@ -1,5 +1,8 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Coordinate {
 
     private int row;
@@ -46,6 +49,36 @@ public class Coordinate {
             }
             coordinates[i-1] = new Coordinate(this.row + rowShift, this.column + columnShift);
         }
+        return coordinates;
+    }
+
+    public List<Coordinate> getPossibleMoves() {
+        List<Coordinate> coordinates = new ArrayList<>();
+        coordinates.add(new Coordinate(this.getRow() + 1, this.getColumn() - 1));
+        coordinates.add(new Coordinate(this.getRow() + 1, this.getColumn() + 1));
+        coordinates.add(new Coordinate(this.getRow() - 1, this.getColumn() - 1));
+        coordinates.add(new Coordinate(this.getRow() - 1, this.getColumn() + 1));
+        return coordinates;
+    }
+
+    public List<Coordinate> getMaximumDiagonalPossible() {
+        List<Coordinate> coordinates = new ArrayList<>();
+        Coordinate coordinateUpBack = new Coordinate(this.getRow(), this.getColumn());
+        while(coordinateUpBack.getRow() != LOWER_LIMIT && coordinateUpBack.getColumn() != LOWER_LIMIT)
+            coordinateUpBack = new Coordinate(coordinateUpBack.getRow() - 1, coordinateUpBack.getColumn() - 1);
+        coordinates.add(coordinateUpBack);
+        Coordinate coordinateDownBack = new Coordinate(this.getRow(), this.getColumn());
+        while(coordinateDownBack.getRow() != UPPER_LIMIT && coordinateDownBack.getColumn() != LOWER_LIMIT)
+            coordinateDownBack = new Coordinate(coordinateDownBack.getRow() + 1, coordinateDownBack.getColumn() - 1);
+        coordinates.add(coordinateDownBack);
+        Coordinate coordinateDownForward = new Coordinate(this.getRow(), this.getColumn());
+        while(coordinateDownForward.getRow() != UPPER_LIMIT && coordinateDownForward.getColumn() != UPPER_LIMIT)
+            coordinateDownForward = new Coordinate(coordinateDownForward.getRow() + 1, coordinateDownForward.getColumn() + 1);
+        coordinates.add(coordinateDownForward);
+        Coordinate coordinateUpForward = new Coordinate(this.getRow(), this.getColumn());
+        while(coordinateUpForward.getRow() != LOWER_LIMIT && coordinateUpForward.getColumn() != UPPER_LIMIT)
+            coordinateUpForward = new Coordinate(coordinateUpForward.getRow() - 1, coordinateUpForward.getColumn() + 1);
+        coordinates.add(coordinateUpForward);
         return coordinates;
     }
 

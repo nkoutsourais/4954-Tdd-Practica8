@@ -23,11 +23,35 @@ public class PieceTest {
     }
 
     @Test
-    public void testGivenPieceWhenGetPossibleMovementsThenArrayCoordinates(){
+    public void testGivenPawnWhenGetPossibleMovementsThenArrayCoordinates(){
         Piece pawn = new Pawn(Color.BLACK);
         Coordinate[] possibleMovements = new Coordinate[] { new Coordinate(1, 0), new Coordinate(1, 2) };
-        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 1)));
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 1)).toArray());
         possibleMovements = new Coordinate[] { new Coordinate(1, 1) };
-        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 0)));
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 0)).toArray());
+        pawn = new Pawn(Color.WHITE);
+        possibleMovements = new Coordinate[] { new Coordinate(0, 0), new Coordinate(0, 2) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(1, 1)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(0, 1) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(1, 0)).toArray());
+    }
+
+    @Test
+    public void testGivenDraughtWhenGetPossibleMovementsThenArrayCoordinates(){
+        Piece pawn = new Draught(Color.WHITE);
+        Coordinate[] possibleMovements = new Coordinate[] { new Coordinate(0, 7) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(7, 0)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(7, 7) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 0)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(0, 0) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(7, 7)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(3, 0), new Coordinate(5, 0), new Coordinate(7, 4), new Coordinate(0, 5) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(4, 1)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(0, 1), new Coordinate(7, 4), new Coordinate(6, 7), new Coordinate(4, 7) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(5, 6)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(0, 0), new Coordinate(6, 0), new Coordinate(7, 7), new Coordinate(0, 6) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(3, 3)).toArray());
+        possibleMovements = new Coordinate[] { new Coordinate(7, 0) };
+        assertArrayEquals(possibleMovements, pawn.getPossibleMoves(new Coordinate(0, 7)).toArray());
     }
 }

@@ -1,5 +1,7 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
+import java.util.List;
+
 public abstract class Piece {
 
 	private Color color;
@@ -19,7 +21,5 @@ public abstract class Piece {
 
 	public abstract boolean isConvertible();
 
-	public Coordinate[] getPossibleMoves(Coordinate origin) {
-		return null;
-	}
+	public abstract List<Coordinate> getPossibleMoves(Coordinate origin);
 }
