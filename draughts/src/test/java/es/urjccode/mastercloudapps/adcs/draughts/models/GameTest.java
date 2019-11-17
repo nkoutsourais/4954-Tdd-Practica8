@@ -102,7 +102,7 @@ public class GameTest {
     }
 
     @Test
-    public void testGivenGameWhenMovementThenEatPiece() {
+    public void testGivenGameWhenPawnMovementThenEatPiece() {
         BoardBuilder boardBuilder = new BoardBuilder()
                                         .addRowEmpty()
                                         .addRowEmpty()
@@ -112,10 +112,28 @@ public class GameTest {
         Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
         Coordinate origin = new Coordinate(3, 0);
         Coordinate target = new Coordinate(5, 2);
-        game.move(origin, target);
-        assertNull(game.getColor(new Coordinate(3, 0)));
+        assertNull(game.move(origin, target));
+        assertNull(game.getColor(origin));
         assertNull(game.getColor(new Coordinate(4, 1)));
-        assertEquals(Color.BLACK, game.getColor(new Coordinate(5, 2)));
+        assertEquals(Color.BLACK, game.getColor(target));
+    }
+
+    @Test
+    public void testGivenGameWhenDraughtMovementThenEatPiece() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRow("     n")
+                                        .addRowEmpty()
+                                        .addRowEmpty()
+                                        .addRow("  b");
+        Game game = new Game(boardBuilder.getBoard());
+        Coordinate origin = new Coordinate(5, 2);
+        Coordinate target = new Coordinate(1, 6);
+        assertNull(game.move(origin, target));
+        assertNull(game.getColor(origin));
+        assertNull(game.getColor(new Coordinate(2, 5)));
+        assertEquals(Color.WHITE, game.getColor(target));
     }
 
     @Test

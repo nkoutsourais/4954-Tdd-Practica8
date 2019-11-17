@@ -26,10 +26,10 @@ class BoardBuilder {
 
     Board getBoard() {
         for (int i = 0; i < this.rows.size(); i++) {
-			for (int j = 0; j < this.rows.get(i).length(); j++) {
+            for (int j = 0; j < this.rows.get(i).length(); j++) {
                 Coordinate coordinate = new Coordinate(i, j);
                 Piece piece = PieceFactory.getPiece(this.rows.get(i).charAt(j));
-                if(piece != null)
+                if (piece != null)
                     this.board.put(coordinate, piece);
             }
         }
@@ -40,17 +40,17 @@ class BoardBuilder {
 class PieceFactory {
 
     static Piece getPiece(char letter) {
-        switch(letter) {
-            case 'b':
-                return new Pawn(Color.WHITE);
-            case 'B':
-                return new Draught(Color.WHITE);
-            case 'n':
-                return new Pawn(Color.BLACK);
-            case 'N':
-                return  new Draught(Color.BLACK);
-            default:
-                return null;
+        switch (letter) {
+        case 'b':
+            return new Pawn(Color.WHITE);
+        case 'B':
+            return new Draught(Color.WHITE);
+        case 'n':
+            return new Pawn(Color.BLACK);
+        case 'N':
+            return new Draught(Color.BLACK);
+        default:
+            return null;
         }
     }
 }
