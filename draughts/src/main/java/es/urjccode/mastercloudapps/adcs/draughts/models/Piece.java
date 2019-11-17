@@ -18,4 +18,8 @@ public abstract class Piece {
 	}
 
 	public abstract boolean isConvertible();
+
+	public Coordinate[] getPossibleMoves(Coordinate origin) {
+		return null;
+	}
 }
