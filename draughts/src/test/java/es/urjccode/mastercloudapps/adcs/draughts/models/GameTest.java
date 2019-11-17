@@ -2,6 +2,8 @@ package es.urjccode.mastercloudapps.adcs.draughts.models;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
 public class GameTest {
@@ -99,6 +101,15 @@ public class GameTest {
         this.game.move(origin, target);
         assertNull(this.game.getColor(origin));
         assertEquals(Color.BLACK, this.game.getColor(target));
+    }
+
+    @Test
+    public void testGivenGameWhenSimulateMovementThenNoMovement() {
+        Coordinate origin = new Coordinate(5, 0);
+        Coordinate target = new Coordinate(4, 1);
+        this.game.simulateMove(origin, target);
+        assertNotNull(this.game.getColor(origin));
+        assertNull(this.game.getColor(target));
     }
 
     @Test

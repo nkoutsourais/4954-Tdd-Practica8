@@ -100,4 +100,8 @@ public class Game {
 			}
 		}
 	}
+
+	public void simulateMove(Coordinate origin, Coordinate target) {
+		throw new UnsupportedOperationException();
+	}
 }
