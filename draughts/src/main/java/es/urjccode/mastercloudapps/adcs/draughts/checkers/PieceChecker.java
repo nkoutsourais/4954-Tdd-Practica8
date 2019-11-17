@@ -49,6 +49,8 @@ class PieceChecker extends CheckerChain {
         int pieces = CountPieces(between, game.getColor(origin));
         if (pieces == 0)
             return Error.EATING_EMPTY;
+        else if (pieces > 1)
+            return Error.MANY_OPPOSITES;
         return null;
     }
 

@@ -10,5 +10,5 @@ public enum Error {
     NOT_ADVANCED, 
     EATING_EMPTY,
     INCORRECT_COMMAND, 
-    EATING_MANY;
+    MANY_OPPOSITES;
 }

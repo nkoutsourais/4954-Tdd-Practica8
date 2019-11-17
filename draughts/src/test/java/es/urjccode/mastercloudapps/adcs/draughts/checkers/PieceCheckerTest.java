@@ -56,7 +56,7 @@ public class PieceCheckerTest {
     }
 
     @Test
-    public void givenPieceCheckerWhenDraughtCheckThenBadDistance() {
+    public void givenPieceCheckerWhenDraughtCheckThenOk() {
         BoardBuilder boardBuilder = new BoardBuilder()
                                         .addRowEmpty()
                                         .addRow(" N")
@@ -65,6 +65,18 @@ public class PieceCheckerTest {
         Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
         PieceChecker pieceChecker = new PieceChecker(game);
         assertNull(pieceChecker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
+    }
+
+    @Test
+    public void givenPieceCheckerWhenDraughtCheckThenManyOpposites() {
+        BoardBuilder boardBuilder = new BoardBuilder()
+                                        .addRowEmpty()
+                                        .addRow(" N")
+                                        .addRow("  b")
+                                        .addRow("   b");
+        Game game = new Game(boardBuilder.getBoard(), new Turn(Color.BLACK));
+        PieceChecker pieceChecker = new PieceChecker(game);
+        assertEquals(Error.MANY_OPPOSITES, pieceChecker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
     }
 
     @Test
